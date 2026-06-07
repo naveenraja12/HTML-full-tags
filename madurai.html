@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forex Shops Dashboard</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            --card-bg: #ffffff;
+            --primary-blue: #2563eb;
+            --primary-hover: #1d4ed8;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --global-badge: #eff6ff;
+            --global-text: #1e40af;
+            --neighbour-badge: #f0fdf4;
+            --neighbour-text: #166534;
+            --middle-east-badge: #fff7ed;
+            --middle-east-text: #9a3412;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #334155;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .district-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .district-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.75rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .district-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .district-card h3 {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .district-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.4;
+        }
+
+        .btn-view {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            width: 100%;
+        }
+
+        .btn-view:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .shops-container {
+            display: none; 
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            margin-top: 2rem;
+        }
+
+        .shops-container.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .shops-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+        }
+
+        .shops-header h2 {
+            font-size: 1.6rem;
+            color: var(--text-dark);
+        }
+
+        .shop-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .shop-main-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .shop-name-block h3 {
+            font-size: 1.4rem;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .shop-name-block h3 i {
+            color: var(--primary-blue);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            color: #475569;
+        }
+
+        .info-item i {
+            margin-top: 0.2rem;
+            width: 16px;
+            color: var(--text-muted);
+        }
+
+        .info-item .label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .map-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .map-link:hover {
+            text-decoration: underline;
+        }
+
+        .currency-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .category-box {
+            padding: 1rem;
+            border-radius: 12px;
+            background: #f8fafc;
+        }
+
+        .category-box.global { background-color: var(--global-badge); color: var(--global-text); }
+        .category-box.neighbour { background-color: var(--neighbour-badge); color: var(--neighbour-text); }
+        .category-box.middle-east { background-color: var(--middle-east-badge); color: var(--middle-east-text); }
+
+        .category-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .currency-badge {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        @media (max-width: 768px) {
+            .shop-main-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="section-title"> MADURAI </h2>
+    
+    <div class="district-grid">
+        <div class="district-card">
+            <h3>Madurai</h3>
+            <p>Forex shops and currency availability.</p>
+            <button class="btn-view" onclick="toggleShops('Madurai')">View Details</button>
+        </div>
+    </div>
+
+    <div class="shops-container" id="shopsContainer">
+        <div class="shops-header">
+            <h2 id="selectedDistrictTitle">Forex Shops</h2>
+        </div>
+        <div id="shopsList"></div>
+    </div>
+</div>
+
+<script>
+    const forexData = {
+        "Madurai": [
+            {
+                 "name": "Thomas Cook",
+                 "locations": "K.K. Nagar",
+                 "address": "Near Apollo Hospitals, #144, K.K. Nagar",
+                 "contact": "1800-2099-100 / +91 452 258 4459",
+                 "hours": "Mon-Sat: 9:30 AM – 6:00 PM (Sun: Closed)",
+                 "currencies": {
+                    "global": ["USD", "EUR", "GBP", "JPY", "CHF", "CAD", "AUD", "SGD", "HKD"],
+                    "neighbour": ["LKR", "THB", "MYR", "IDR", "BDN", "VND"],
+                    "middleEast": ["AED", "SAR", "QAR", "KWD", "BHD", "OMR", ]
+                }
+            },
+            {
+                 "name": "Unimoni Financial Services",
+                 "locations": "Madurai Main",
+                 "address": "No. 44/12, Ground Floor, Sambandha Moorthy Street, Madurai Main",
+                 "contact": "+91 75940 02521",
+                 "hours": "Mon-Fri: 10:00 AM – 6:30 PM, Sat: 10:00 AM – 2:30 PM (Sun: Closed)",
+                 "currencies": {
+                    "global": ["USD", "EUR", "GBP", "JPY", "CHF", "CAD"],
+                    "neighbour": ["LKR", "PKR", "CNY", "THB", "JPY", "SGD"],
+                    "middleEast": ["AED", "SAR", "QAR", "KWD", "BHD", "OMR"]
+                }
+            },
+            {
+                 "name": "Muthoot Foreign Exchange",
+                 "locations": "Madurai Main",
+                 "address": "392/393, 1st Floor, North Masi Street, Madurai Main",
+                 "contact": "+91 91883 00600 / 1800-313-1212",
+                 "hours": "Mon-Sat: 9:00 AM – 5:30 PM (Sun: Closed)",
+                 "currencies": {
+                    "global": ["USD", "EUR", "GBP", "JPY", "CHF", "CAD", "AUD"],
+                    "neighbour": ["LKR", "NPR", "THB", "MNY", "CNY","SGD","HKD"],
+                    "middleEast": ["AED", "SAR", "QAR", "KWD", "BHD", "OMR"]
+                }
+            },
+            {
+                 "name": "Pheroze Framroze (BookYourFX)",
+                 "locations": "Madurai",
+                 "address": "RBI Authorised Agent Network, Madurai",
+                 "contact": "+91 73045 66198",
+                 "hours": "Mon-Sat: 9:30 AM – 6:30 PM (Sun: Closed)",
+                 "currencies": {
+                    "global": ["USD", "EUR", "GBP", "JPY", "CAD", "AUD","CHF"],
+                    "neighbour": ["HKD", "CNY", "SGD", "THB", "MYR"],
+                    "middleEast": ["AED", "SAR", "QAR", "KWD", "BHD", "OMR"]
+                }
+            },
+            {
+                 "name": "Kanakam Forex Pvt Ltd",
+                 "locations": "Simmakkal",
+                 "address": "92A, Vakkil New Street, Simmakkal, Madurai Main",
+                 "contact": "+91 99440 35678",
+                 "hours": "Mon-Sat: 9:30 AM – 6:30 PM (Sun: Closed)",
+                 "currencies": {
+                    "global": ["USD", "EUR", "GBP", "CAD", "JPY", "CHF"],
+                    "neighbour": ["LKR","SGD", "THB", "MNY", "CNY","HKD"],
+                    "middleEast": ["UAE", "SAR", "KWD", "BHD", "OMR"]
+                }
+            }
+        ]
+    };
+
+    function toggleShops(district) {
+        const container = document.getElementById('shopsContainer');
+        const listDiv = document.getElementById('shopsList');
+        const title = document.getElementById('selectedDistrictTitle');
+        
+        title.innerText = `Forex Shops in ${district}`;
+        listDiv.innerHTML = ''; 
+
+        if(forexData[district]) {
+            forexData[district].forEach(shop => {
+                
+                const query = encodeURIComponent(`${shop.name} ${shop.address}`);
+                const mapSearchUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
+
+                const renderBadges = (list) => list.map(cur => `<span class="currency-badge">${cur}</span>`).join('');
+
+                const cardHtml = `
+                    <div class="shop-card">
+                        <div class="shop-main-info">
+                            <div class="shop-name-block">
+                                <h3><i class="fa-solid fa-building-columns"></i> ${shop.name}</h3>
+                                <div class="info-item" style="margin-top: 1rem;">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <div>
+                                        <span class="label">Location:</span> ${shop.locations}<br>
+                                        <span style="font-size: 0.85rem; color: #64748b; display: block; margin-top: 4px;">${shop.address}</span>
+                                    </div>
+                                </div>
+                                <a href="${mapSearchUrl}" class="map-link">
+                                    <i class="fa-solid fa-map-location-dot"></i> View on Google Maps
+                                </a>
+                            </div>
+                            <div>
+                                <div class="info-item">
+                                    <i class="fa-solid fa-clock"></i>
+                                    <div><span class="label">Timings:</span> ${shop.hours}</div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fa-solid fa-phone"></i>
+                                    <div><span class="label">Contact:</span> <a href="tel:${shop.contact.replace(/\s+/g, '')}" style="color: inherit; text-decoration: none; font-weight: 600;">${shop.contact}</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="currency-categories">
+                            <div class="category-box global">
+                                <div class="category-title">🌍 Global Major Currencies</div>
+                                <div class="badge-container">${renderBadges(shop.currencies.global)}</div>
+                            </div>
+                            <div class="category-box neighbour">
+                                <div class="category-title">🌏 Neighbour Country Currencies</div>
+                                <div class="badge-container">${renderBadges(shop.currencies.neighbour)}</div>
+                            </div>
+                            <div class="category-box middle-east">
+                                <div class="category-title">🕌 Middle East Currencies</div>
+                                <div class="badge-container">${renderBadges(shop.currencies.middleEast)}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                listDiv.innerHTML += cardHtml;
+            });
+
+            container.classList.add('active');
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+</script>
