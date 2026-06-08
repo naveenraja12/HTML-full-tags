@@ -274,7 +274,8 @@
         "Chennai": [
             {
                 "name": "Thomas Cook",
-                "locations": ["Adyar", "Anna Nagar", "T. Nagar"],
+                "locations": "Adyar",
+                "address": "Adyar,Anna Nagar,T.Nagar",
                 "contact": "+91 88798 28056",
                 "hours": "Monday – Saturday : 9:30 AM – 7:00 PM (Sunday: Closed)",
                 "currencies": {
@@ -285,7 +286,8 @@
             },
             {
                 "name": "Unimoni (UAE Exchange)",
-                "locations": ["Adyar", "Mount Road", "Perambur"],
+                "locations": "Anna Salai",
+                "address": "Adyar, Mount Road, Perambur, Chennai",
                 "contact": "+91 75940 02125",
                 "hours": "Monday – Saturday : 9:00 AM – 6:00 PM (Sunday: Closed)",
                 "currencies": {
@@ -296,7 +298,8 @@
             },
             {
                 "name": "Muthoot Forex",
-                "locations": ["Saidapet", "Kilpauk"],
+                "locations": "Saidapet",
+                "address": "Saidapet, Kilpauk, Chennai",
                 "contact": "+91 91883 00600",
                 "hours": "Monday – Saturday : 9:00 AM – 5:30 PM (Sunday: Closed)",
                 "currencies": {
@@ -307,7 +310,8 @@
             },
             {
                 "name": "Prithvi Exchange",
-                "locations": ["Anna Nagar", "OMR", "Adyar"],
+                "locations": "Anna Nagar",
+                "address": "Anna Nagar, OMR, Adyar, Chennai",
                 "contact": "+91 91503 17059",
                 "hours": "Monday – Saturday : 9:30 AM – 6:30 PM (Sunday: Closed)",
                 "currencies": {
@@ -318,7 +322,8 @@
             },
             {
                 "name": "Coinex Forex Services",
-                "locations": ["Velachery", "Pallavaram", "Adyar"],
+                "locations": "Velachery",
+                "address": "Velachery, Pallavaram, Adyar, Chennai", 
                 "contact": "+91 98403 85232",
                 "hours": "Monday – Saturday : 9:00 AM – 8:30 PM (Sunday: Closed)",
                 "currencies": {
@@ -341,7 +346,7 @@
         if(forexData[district]) {
             forexData[district].forEach(shop => {
                 
-                const query = encodeURIComponent(`${shop.name} ${shop.address}`);
+                const query = encodeURIComponent(`${shop.name} ${shop.address }`);
                 const mapSearchUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
 
                 const renderBadges = (list) => list.map(cur => `<span class="currency-badge">${cur}</span>`).join('');
