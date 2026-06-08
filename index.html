@@ -554,24 +554,19 @@ window.addEventListener("DOMContentLoaded", initializeConverter);
 
 function searchDistrict(){
 
-    const district=document.getElementById("districtSearch").value.toLowerCase();
+    const district = document.getElementById("districtSearch").value.trim().toLowerCase();
 
-    if(district==="chennai.html"){
-        alert("Redirect to Chennai Page");
-    }
-    else if(district==="coimbatore.html"){
-        alert("Redirect to Coimbatore Page");
-    }
-    else if(district==="madurai.html"){
-        alert("Redirect to Madurai Page");
-    }
-    else if(district==="trichy.html"){
-        alert("Redirect to Trichy Page");
-    }
-    else if(district==="salem.html"){
-        alert("Redirect to Salem Page");
-    }
-    else{
+    const pages = {
+        chennai: "chennai.html",
+        coimbatore: "coimbatore.html",
+        madurai: "madurai.html",
+        trichy: "trichy.html",
+        salem: "salem.html"
+    };
+
+    if(pages[district]){
+        window.location.href = pages[district];
+    } else {
         alert("Please select a valid district");
     }
 }
